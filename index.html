@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Iframe Loader</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Proxy</title>
   <style>
-    html, body { margin:0; padding:0; height:100%; }
-    iframe { width:100%; height:100%; border:none; }
+    body { margin:0; font-family:sans-serif; }
+    #searchBar { width: 100%; padding: 10px; box-sizing: border-box; font-size: 16px; }
+    iframe { width:100%; height: calc(100vh - 40px); border:none; }
   </style>
 </head>
 <body>
-  <iframe src="https://adverse-hildagard-antonkrupinski-b72d3014.koyeb.app/" allowfullscreen></iframe>
+  <input id="searchBar" type="text" placeholder="Enter URL..." />
+  <iframe id="proxyFrame" src=""></iframe>
+
+  <script>
+    const input = document.getElementById('searchBar');
+    const iframe = document.getElementById('proxyFrame');
+
+    input.addEventListener('keydown', function(e) {
+      if(e.key === 'Enter') {
+        let url = input.value.trim();
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+          url = 'https://' + url; // default to https
+        }
+        iframe.src = url;
+      }
+    });
+  </script>
 </body>
 </html>
-
-
